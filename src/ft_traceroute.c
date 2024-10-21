@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 02:16:43 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 00:26:44 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 01:22:16 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static void	setup_struct(t_troute *troute)
 {
 	fetch_ip_addr(troute);
-	setup_upd_socket(troute);
+	init_udp_socket(troute);
 }
 
 int	main(int ac, char **av)
 {
 	t_troute	troute;
 
-	check_uid();
+	//check_uid();
 	ft_memset(&troute, 0, sizeof(troute));
 
 	parse_args(&troute.args, ac, av);

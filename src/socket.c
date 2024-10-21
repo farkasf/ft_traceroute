@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 00:37:03 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 01:23:29 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute)
 {
 	if (setsockopt(socket_fd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
 	{
-		dprintf(STDERR_FILENO, "ft_traceroute: failed to set TTL: %s\n", strerror(errno));
+		dprintf(STDERR_FILENO, "ft_traceroute: failed to set socket TTL: %s\n", strerror(errno));
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
@@ -47,17 +47,19 @@ void	fetch_ip_addr(t_troute *troute)
 		print_args_error("Cannot handle \"host\" cmdline arg `%s' on position 1 (argc %d)\n", \
 			&troute->args, troute->args.target, troute->args.target_pos);
 	}
-	if (res->ai_addrlen != sizeof(troute->network.remote_addr))
+	if (res->ai_addrlen != sizeof(troute->network.target_addr))
 	{
 		dprintf(STDERR_FILENO, "ft_traceroute: address length mismatch: %s\n", strerror(errno));
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
-	ft_memcpy(&troute->network.remote_addr, res->ai_addr, res->ai_addrlen);
+	ft_memcpy(&troute->network.target_addr, res->ai_addr, res->ai_addrlen);
 
-	if (inet_ntop(AF_INET, &troute->network.remote_addr.sin_addr, troute->network.host_ip, INET_ADDRSTRLEN) == NULL)
+	ft_strlcpy(troute->network.host_ip, inet_ntoa(troute->network.target_addr.sin_addr), \
+		ft_strlen(inet_ntoa(troute->network.target_addr.sin_addr)) + 1);
+	if (ft_strlen(troute->network.host_ip) == 0)
 	{
-		dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format: %s\n", strerror(errno));
+		dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format\n");
 		freeaddrinfo(res);
 		free_struct(troute);
 		exit(EXIT_FAILURE);
@@ -66,7 +68,7 @@ void	fetch_ip_addr(t_troute *troute)
 	freeaddrinfo(res);
 }
 
-void	setup_upd_socket(t_troute *troute)
+void	init_udp_socket(t_troute *troute)
 {
 	troute->network.socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (troute->network.socket_fd == -1)
@@ -75,4 +77,7 @@ void	setup_upd_socket(t_troute *troute)
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
+	ft_memset(&troute->network.target_addr, 0, sizeof(troute->network.target_addr));
+	troute->network.target_addr.sin_family = AF_INET;
+	troute->network.target_addr.sin_port = htons(troute->args.probe_port);
 }

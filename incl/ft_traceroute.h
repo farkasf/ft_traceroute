@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 00:35:55 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 01:22:12 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 typedef struct s_network
 {
-	struct sockaddr_in	remote_addr;
+	struct sockaddr_in	target_addr;
 	char				host_ip[INET_ADDRSTRLEN];
 	int					socket_fd;
 }	t_network;
@@ -71,7 +71,7 @@ void	print_usage(void);
 void	print_args_error(const char *format, t_args *args, ...);
 
 void	fetch_ip_addr(t_troute *troute);
-void	setup_upd_socket(t_troute *troute);
+void	init_udp_socket(t_troute *troute);
 void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute);
 
 void	troute_routine(t_troute *troute);
