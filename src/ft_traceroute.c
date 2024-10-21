@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 02:16:43 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 21:41:43 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 22:28:43 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	main(int ac, char **av)
 	memset(&troute, 0, sizeof(troute));
 	parse_args(&troute.args, ac, av);
 
-	printf("Target: %s\n", troute.args.target);
+	fetch_ip_addr(&troute);
+
+	printf("Target: %s (resolved as IP %s)\n", troute.args.target, troute.network.host_ip);
 	printf("Number of queries (-q): %u\n", troute.args.n_queries);
 	printf("Max TTL (-m): %u\n", troute.args.max_ttl);
 	printf("Port (-p): %u\n", troute.args.probe_port);

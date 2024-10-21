@@ -2,7 +2,8 @@ NAME = ft_traceroute
 LIBFT = ./libft/libft.a
 SRC =	./src/ft_traceroute.c \
 		./src/parser.c \
-		./src/utils.c
+		./src/utils.c \
+		./src/socket.c
 OBJS = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 CC = cc

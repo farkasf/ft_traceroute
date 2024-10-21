@@ -6,11 +6,20 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 21:46:24 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 22:30:31 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	free_struct(t_troute *troute)
+{
+	if (troute->args.target)
+	{
+		free(troute->args.target);
+		troute->args.target = NULL;
+	}
+}
 
 void	print_args_error(const char *format, t_args *args, ...)
 {
@@ -20,7 +29,10 @@ void	print_args_error(const char *format, t_args *args, ...)
 	vdprintf(STDERR_FILENO, format, args_list);
 	va_end(args_list);
 	if (args->target)
+	{
 		free(args->target);
+		args->target = NULL;
+	}
 	exit(EXIT_FAILURE);
 }
 

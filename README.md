@@ -5,7 +5,7 @@ This project will make you recode the traceroute command.
 
 1. [✅] create a command-line argument parser to validate user input
    * target IP, number of probes (`-q`), max hops (`-m`), first hop (`-f`), default port (`-p`), no IP domain resolution (`-n`) and help (`--help`)
-2. [❌] resolve the target's IPv4 address
+2. [✅] resolve the target's IPv4 address
    * convert the domain name or provided hostname to an IPv4 address using `getaddrinfo()`
 3. [❌] create the UDP socket on the base port (default 33434)
 4. [❌] initialize the probe packets

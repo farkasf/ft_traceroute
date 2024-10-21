@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:03:34 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 21:49:25 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 22:21:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	set_opt(unsigned int *option_val, char *flag, int i, int ac, char **a
 				ft_strlen(flag) > 2 ? flag + 2 : av[i + 1], ft_strlen(flag) > 2 ? i : i + 1);
 		else
 			print_args_error("Option `-%c' (argc %d) requires an argument: `-%c %s'\n", args, flag[1], \
-				i + 1, flag[1], opt_type[(unsigned char)flag[1]]);
+				i, flag[1], opt_type[(unsigned char)flag[1]]);
 	}
 	return (1);
 }
@@ -108,14 +108,17 @@ void	parse_args(t_args *args, int ac, char **av)
 			else if (av[i][1] == 'n' && av[i][2] == '\0')
 				args->resolve = false;
 			else
-				print_args_error("Bad option `%s' (argc %d)\n", args, av[i], ac);
+				print_args_error("Bad option `%s' (argc %d)\n", args, av[i], ac - 1);
 		}
 		else
 		{
 			if (!args->target)
+			{
 				args->target = ft_strdup(av[i]);
+				args->target_pos = i;	
+			}
 			else
-				print_args_error("Extra arg `%s' (argc %d)\n", args, av[i], ac);
+				print_args_error("Extra arg `%s' (argc %d)\n", args, av[i], ac - 1);
 		}
 		i++;
 	}
