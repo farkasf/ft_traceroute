@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:03:34 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 22:21:57 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:23:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	parse_args(t_args *args, int ac, char **av)
 	int	i;
 
 	i = 1;
+	if (ac < 2)
+		print_usage();
+
 	while (i < ac)
 	{
 		if (ft_strncmp(av[i], "--help", 6) == 0 && ft_strlen(av[i]) == 6)

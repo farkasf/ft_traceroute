@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 23:46:31 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:35:55 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ void	print_args_error(const char *format, t_args *args, ...);
 
 void	fetch_ip_addr(t_troute *troute);
 void	setup_upd_socket(t_troute *troute);
+void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute);
+
+void	troute_routine(t_troute *troute);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 02:16:43 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 23:50:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:26:44 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
 
-static void	traceroute_setup(t_troute *troute)
+static void	setup_struct(t_troute *troute)
 {
 	fetch_ip_addr(troute);
 	setup_upd_socket(troute);
@@ -23,15 +23,12 @@ int	main(int ac, char **av)
 	t_troute	troute;
 
 	check_uid();
-	if (ac < 2)
-		print_usage();
-
 	ft_memset(&troute, 0, sizeof(troute));
-	parse_args(&troute.args, ac, av);
-	traceroute_setup(&troute);
 
-	dprintf(STDERR_FILENO, "traceroute to %s (%s), %d hops max, %d byte packets\n", \
-		troute.args.target, troute.network.host_ip, troute.args.max_ttl, UPD_DATALEN);
+	parse_args(&troute.args, ac, av);
+	setup_struct(&troute);
+
+	troute_routine(&troute);
 
 	free_struct(&troute);
 	return (0);

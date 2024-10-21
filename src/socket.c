@@ -6,11 +6,21 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 23:35:05 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:37:03 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute)
+{
+	if (setsockopt(socket_fd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
+	{
+		dprintf(STDERR_FILENO, "ft_traceroute: failed to set TTL: %s\n", strerror(errno));
+		free_struct(troute);
+		exit(EXIT_FAILURE);
+	}
+}
 
 static int	resolve_host(char *hostname, struct addrinfo **res)
 {
