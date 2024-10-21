@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 03:12:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 21:36:42 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <stdbool.h>
 
+# define DEF_PORT 33434
 # define DEF_HOPS 30
 # define MAX_HOPS 255
 # define DEF_PROBES 3
@@ -31,7 +32,7 @@ typedef struct s_args
 	char			*target;
 	unsigned int	n_queries;
 	unsigned int	max_ttl;
-	unsigned int	send_wait;
+	unsigned int	probe_port;
 	unsigned int	first_ttl;
 	bool			resolve;
 }	t_args;

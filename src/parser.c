@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:03:34 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 03:15:33 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 21:49:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static const char *opt_type[] = {
 	['q'] = "nqueries",
 	['m'] = "max_ttl",
-	['z'] = "sendwait",
+	['p'] = "port",
 	['f'] = "first_ttl"
 };
 
@@ -23,7 +23,7 @@ static void	set_def_values(t_args *args)
 {
 	args->n_queries = DEF_PROBES;
 	args->max_ttl = DEF_HOPS;
-	args->send_wait = 0;
+	args->probe_port = DEF_PORT;
 	args->first_ttl = 1;
 	args->resolve = 1;
 }
@@ -37,8 +37,8 @@ static unsigned int	set_opt_value(char flag, char *num, t_args *args)
 		print_args_error("no more than %d probes per hop\n", args, MAX_PROBES);
 	else if (flag == 'm' && value > MAX_HOPS)
 		print_args_error("max hops cannot be more than %d\n", args, MAX_HOPS);
-	else if (flag == 'z' && (!value || ft_atoi(num) < 0))
-		print_args_error("bad sendtime `%s' specified\n", args, num);
+	else if (flag == 'p' && (!value || value > 65535))
+		print_args_error("invalid port number `%s'\n", args, num);
 	else if (flag == 'f' && (!value || value > MAX_HOPS))
 		print_args_error("first hop out of range\n", args, NULL);
 	return (value);
@@ -70,7 +70,6 @@ void	parse_args(t_args *args, int ac, char **av)
 	int	i;
 
 	i = 1;
-	set_def_values(args);
 	while (i < ac)
 	{
 		if (ft_strncmp(av[i], "--help", 6) == 0 && ft_strlen(av[i]) == 6)
@@ -79,9 +78,16 @@ void	parse_args(t_args *args, int ac, char **av)
 				free(args->target);
 			print_usage();
 		}
-		else if (av[i][0] == '-')
+		i++;
+	}
+
+	i = 1;
+	set_def_values(args);
+	while (i < ac)
+	{
+		if (av[i][0] == '-')
 		{
-			if (ft_strchr("qmzf", av[i][1]))
+			if (ft_strchr("qmpf", av[i][1]))
 			{
 				switch (av[i][1])
 				{
@@ -91,8 +97,8 @@ void	parse_args(t_args *args, int ac, char **av)
 					case 'm':
 						i += set_opt(&args->max_ttl, av[i], i, ac, av, args);
 						break ;
-					case 'z':
-						i += set_opt(&args->send_wait, av[i], i, ac, av, args);
+					case 'p':
+						i += set_opt(&args->probe_port, av[i], i, ac, av, args);
 						break ;
 					case 'f':
 						i += set_opt(&args->first_ttl, av[i], i, ac, av, args);
