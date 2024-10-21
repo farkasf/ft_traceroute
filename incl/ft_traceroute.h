@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/20 12:10:48 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 03:12:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdarg.h>
 # include <string.h>
 # include <stdbool.h>
 
@@ -39,5 +40,10 @@ typedef struct s_troute
 {
 	t_args	args;
 }	t_troute;
+
+void	parse_args(t_args *args, int ac, char **av);
+
+void	print_usage(void);
+void	print_args_error(const char *format, t_args *args, ...);
 
 #endif
