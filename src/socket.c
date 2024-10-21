@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 22:29:52 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:35:05 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	fetch_ip_addr(t_troute *troute)
 	}
 	if (res->ai_addrlen != sizeof(troute->network.remote_addr))
 	{
-		dprintf(STDERR_FILENO, "ft_traceroute: address length mismatch\n");
+		dprintf(STDERR_FILENO, "ft_traceroute: address length mismatch: %s\n", strerror(errno));
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
@@ -47,11 +47,22 @@ void	fetch_ip_addr(t_troute *troute)
 
 	if (inet_ntop(AF_INET, &troute->network.remote_addr.sin_addr, troute->network.host_ip, INET_ADDRSTRLEN) == NULL)
 	{
-		dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format\n");
+		dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format: %s\n", strerror(errno));
 		freeaddrinfo(res);
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
 
 	freeaddrinfo(res);
+}
+
+void	setup_upd_socket(t_troute *troute)
+{
+	troute->network.socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+	if (troute->network.socket_fd == -1)
+	{
+		dprintf(STDERR_FILENO, "ft_traceroute: failed to create UDP socket: %s\n", strerror(errno));
+		free_struct(troute);
+		exit(EXIT_FAILURE);
+	}
 }

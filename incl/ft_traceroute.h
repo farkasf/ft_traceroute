@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 22:27:56 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:46:31 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdarg.h>
 # include <string.h>
 # include <stdbool.h>
+# include <errno.h>
 
 # include <arpa/inet.h>
 # include <sys/types.h>
@@ -35,10 +36,14 @@
 # define DEF_PROBES 3
 # define MAX_PROBES 10
 
+# define UPD_HDRLEN 8
+# define UPD_DATALEN 60
+
 typedef struct s_network
 {
 	struct sockaddr_in	remote_addr;
 	char				host_ip[INET_ADDRSTRLEN];
+	int					socket_fd;
 }	t_network;
 
 typedef struct s_args
@@ -60,10 +65,12 @@ typedef struct s_troute
 
 void	parse_args(t_args *args, int ac, char **av);
 
+void	check_uid(void);
 void	free_struct(t_troute *troute);
 void	print_usage(void);
 void	print_args_error(const char *format, t_args *args, ...);
 
 void	fetch_ip_addr(t_troute *troute);
+void	setup_upd_socket(t_troute *troute);
 
 #endif

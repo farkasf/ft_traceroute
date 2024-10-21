@@ -7,7 +7,7 @@ This project will make you recode the traceroute command.
    * target IP, number of probes (`-q`), max hops (`-m`), first hop (`-f`), default port (`-p`), no IP domain resolution (`-n`) and help (`--help`)
 2. [✅] resolve the target's IPv4 address
    * convert the domain name or provided hostname to an IPv4 address using `getaddrinfo()`
-3. [❌] create the UDP socket on the base port (default 33434)
+3. [✅] create the UDP socket on the base port (default 33434)
 4. [❌] initialize the probe packets
    * send packets starting from the base port (default 33434) up to `base + (max hops - 1)`
    * start with a TTL of 1 and increase until the max hops or the destination is reached

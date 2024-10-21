@@ -6,11 +6,19 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 22:30:31 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:49:43 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	check_uid(void)
+{
+	if (getuid() == 0)
+		return ;
+	dprintf(STDERR_FILENO, "ft_traceroute: user not root\n");
+	exit(EXIT_FAILURE);
+}
 
 void	free_struct(t_troute *troute)
 {
@@ -19,6 +27,8 @@ void	free_struct(t_troute *troute)
 		free(troute->args.target);
 		troute->args.target = NULL;
 	}
+	if (troute->network.socket_fd)
+		close(troute->network.socket_fd);
 }
 
 void	print_args_error(const char *format, t_args *args, ...)
