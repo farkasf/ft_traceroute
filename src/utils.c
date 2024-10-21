@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 03:13:28 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/21 03:33:27 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@ void	print_args_error(const char *format, t_args *args, ...)
 
 void	print_usage(void)
 {
-	dprintf(STDOUT_FILENO, "this will be usage text\n");
+	dprintf(STDOUT_FILENO,
+		"\nUsage:\n"
+		"  ./ft_traceroute [ -n ] [ -f first_ttl ] [ -m max_ttl ] [ -q nqueries ] [ -z sendwait ] host\n"
+		"\nOptions:\n"
+		"  -f first_ttl                Start from the first_ttl hop (instead from 1).\n"
+		"  -m max_ttl                  Set the max number of hops (max TTL to be reached).\n"
+		"                              Default is 30.\n"
+		"  -n                          Do not resolve IP addresses to their domain names.\n"
+		"  -q nqueries                 Set the number of probes per each hop. Default is 3.\n"
+		"  -z sendwait                 Minimal time interval between probes (default is 0).\n"
+		"                              If the value is more than 10, then it specifies a\n"
+		"                              number in milliseconds, else it is a number of\n"
+		"                              seconds.\n"
+		"  --help                      Read this help and exit.\n"
+		"\nArguments:\n"
+		"+     host          The host to traceroute to.\n\n");
 	exit(EXIT_SUCCESS);
 }
