@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 04:48:07 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:21:05 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	print_trace_result(t_probe *probe, t_troute *troute)
 			exit(EXIT_FAILURE);
 		}
 	}
-	dprintf(STDOUT_FILENO, "%s", domain);
+	if (troute->network.previous_addr.sin_addr.s_addr == probe->recv_addr.sin_addr.s_addr)
+		dprintf(STDOUT_FILENO, " ?.??? ms ");
+	else
+		dprintf(STDOUT_FILENO, " %s (%s)  ?.??? ms ", domain, inet_ntoa(probe->recv_addr.sin_addr));
 }
 
 static int	analyze_reply(t_probe *probe)
@@ -42,7 +45,7 @@ static int	analyze_reply(t_probe *probe)
 	icmp_hdr = (struct icmp *)(probe->recv_packet + (ip_hdr->ip_hl << 2));
 	if (icmp_hdr->icmp_type == 0 || icmp_hdr->icmp_type == 3 || icmp_hdr->icmp_type == 11 || icmp_hdr->icmp_type == 5)
 		return (0);
-	dprintf(STDERR_FILENO, "*");
+	dprintf(STDERR_FILENO, " * (no response)");
 	return (-1);
 }
 
@@ -62,7 +65,7 @@ void	receive_reply(t_troute *troute)
 	{
 		if (errno == EHOSTUNREACH || errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
 		{
-			dprintf(STDERR_FILENO, "*");
+			dprintf(STDERR_FILENO, " * ");
 			return ;
 		}
 		dprintf(STDERR_FILENO, "ft_traceroute: recvfrom failed: %s\n", strerror(errno));

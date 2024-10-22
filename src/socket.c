@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 03:01:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:07:30 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	fetch_ip_addr(t_troute *troute)
 		exit(EXIT_FAILURE);
 	}
 
-	freeaddrinfo(res);
-}
+	freeaddrinfo(res);}
 
 void	init_sockets(t_troute *troute)
 {
@@ -77,9 +76,7 @@ void	init_sockets(t_troute *troute)
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
-	ft_memset(&troute->network.target_addr, 0, sizeof(troute->network.target_addr));
 	troute->network.target_addr.sin_family = AF_INET;
-
 	troute->network.icmp_socket_fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (troute->network.icmp_socket_fd == -1)
 	{
