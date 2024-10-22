@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:03:34 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 00:23:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 01:13:23 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,6 @@ void	parse_args(t_args *args, int ac, char **av)
 
 	if (!args->target || ft_strlen(args->target) < 1)
 		print_args_error("Specify \"host\" missing argument.\n", args, NULL);
+	if (args->first_ttl > args->max_ttl)
+		print_args_error("first hop out of range\n", args, NULL);
 }
