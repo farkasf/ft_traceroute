@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 17:39:57 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 23:48:05 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
 
-char	*resolve_probe_output(t_probe *probe, t_troute *troute, char mode)
+static char	*resolve_probe_output(t_probe *probe, t_troute *troute, char mode)
 {
 	struct hostent	*hop;
 	char			*output;
@@ -37,7 +37,7 @@ char	*resolve_probe_output(t_probe *probe, t_troute *troute, char mode)
 	return (output);
 }
 
-void	print_trace_result(t_probe *probe, t_troute *troute)
+static void	print_trace_result(t_probe *probe, t_troute *troute)
 {
 	char	*domain;
 	char	*ip_str;

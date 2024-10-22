@@ -25,7 +25,7 @@ $(NAME): $(OBJS)
 	@make all -C ./libft
 	@echo "$(BLUE)linking object files$(NC)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(RED)$(NAME) ready$(NC)"
+	@echo "$(GREEN)$(NAME) ready$(NC)"
 
 %.o: %.c
 	@echo "$(BLUE)compiling $<$(NC)"
@@ -39,6 +39,6 @@ clean:
 fclean: clean
 	@$(R) $(NAME)
 	@${MAKE} fclean -C ./libft
-	@echo "$(GREEN)full clean done.$(NC)"
+	@echo "$(RED)full clean done.$(NC)"
 
 re: fclean all
