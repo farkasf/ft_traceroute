@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 23:48:05 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 00:03:20 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	handle_reply(t_troute *troute)
 	t_probe	probe;
 
 	probe.addr_size = sizeof(probe.recv_addr);
-	probe.timeout.tv_sec = 1;
-	probe.timeout.tv_usec = 0;
+	probe.timeout.tv_sec = 0;
+	probe.timeout.tv_usec = 500000;
 
 	setsockopt(troute->network.icmp_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &probe.timeout, sizeof(probe.timeout));
 	probe.recv_bytes = recvfrom(troute->network.icmp_socket_fd, probe.recv_packet, sizeof(probe.recv_packet), 0, \
