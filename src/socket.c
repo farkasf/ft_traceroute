@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 01:23:29 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 01:51:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,4 @@ void	init_udp_socket(t_troute *troute)
 	}
 	ft_memset(&troute->network.target_addr, 0, sizeof(troute->network.target_addr));
 	troute->network.target_addr.sin_family = AF_INET;
-	troute->network.target_addr.sin_port = htons(troute->args.probe_port);
 }

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 01:22:12 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 01:51:48 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <netinet/in.h>
 # include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
+# include <netinet/udp.h>
 
 # define DEF_PORT 33434
 # define DEF_HOPS 30
@@ -36,6 +37,7 @@
 # define DEF_PROBES 3
 # define MAX_PROBES 10
 
+# define IP_HDRLEN 20
 # define UPD_HDRLEN 8
 # define UPD_DATALEN 60
 
@@ -75,5 +77,7 @@ void	init_udp_socket(t_troute *troute);
 void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute);
 
 void	troute_routine(t_troute *troute);
+
+void	send_udp_probe(t_troute *troute);
 
 #endif

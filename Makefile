@@ -4,7 +4,8 @@ SRC =	./src/ft_traceroute.c \
 		./src/parser.c \
 		./src/utils.c \
 		./src/socket.c \
-		./src/routine.c
+		./src/routine.c \
+		./src/probe.c
 OBJS = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 CC = cc
