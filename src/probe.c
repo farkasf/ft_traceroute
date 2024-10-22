@@ -6,11 +6,45 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 03:02:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 04:48:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	print_trace_result(t_probe *probe, t_troute *troute)
+{
+	struct hostent	*hop;
+	char			*domain;
+
+	hop = gethostbyaddr(&(probe->recv_addr.sin_addr), sizeof(struct in_addr), AF_INET);
+	if (hop)
+		domain = hop->h_name;
+	else
+	{
+		domain = inet_ntoa(probe->recv_addr.sin_addr);
+		if (ft_strlen(domain) == 0)
+		{
+			dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format\n");
+			free_struct(troute);
+			exit(EXIT_FAILURE);
+		}
+	}
+	dprintf(STDOUT_FILENO, "%s", domain);
+}
+
+static int	analyze_reply(t_probe *probe)
+{
+	struct ip		*ip_hdr;
+	struct icmp		*icmp_hdr;
+	
+	ip_hdr = (struct ip *)probe->recv_packet;
+	icmp_hdr = (struct icmp *)(probe->recv_packet + (ip_hdr->ip_hl << 2));
+	if (icmp_hdr->icmp_type == 0 || icmp_hdr->icmp_type == 3 || icmp_hdr->icmp_type == 11 || icmp_hdr->icmp_type == 5)
+		return (0);
+	dprintf(STDERR_FILENO, "*");
+	return (-1);
+}
 
 void	receive_reply(t_troute *troute)
 {
@@ -28,14 +62,17 @@ void	receive_reply(t_troute *troute)
 	{
 		if (errno == EHOSTUNREACH || errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
 		{
-			dprintf(STDERR_FILENO, " * ");
+			dprintf(STDERR_FILENO, "*");
 			return ;
 		}
 		dprintf(STDERR_FILENO, "ft_traceroute: recvfrom failed: %s\n", strerror(errno));
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
-	dprintf(STDOUT_FILENO, "OK");
+	if (analyze_reply(&probe) == -1)
+		return ;
+	print_trace_result(&probe, troute);
+	troute->network.previous_addr = probe.recv_addr;
 }
 
 void	send_udp_probe(t_troute *troute)
