@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:24:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:40:24 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	print_trace_result(t_probe *probe, t_troute *troute)
 		}
 	}
 	if (troute->network.previous_addr.sin_addr.s_addr == probe->recv_addr.sin_addr.s_addr)
-		dprintf(STDOUT_FILENO, " ?.??? ms ");
+		dprintf(STDOUT_FILENO, " ?.??? ms");
 	else
-		dprintf(STDOUT_FILENO, " %s (%s)  ?.??? ms ", domain, inet_ntoa(probe->recv_addr.sin_addr));
+		dprintf(STDOUT_FILENO, "%s (%s)  ?.??? ms", domain, inet_ntoa(probe->recv_addr.sin_addr));
 }
 
 static int	analyze_reply(t_probe *probe)
@@ -65,7 +65,7 @@ void	handle_reply(t_troute *troute)
 	{
 		if (errno == EHOSTUNREACH || errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
 		{
-			dprintf(STDERR_FILENO, " * ");
+			dprintf(STDERR_FILENO, "*");
 			return ;
 		}
 		dprintf(STDERR_FILENO, "ft_traceroute: recvfrom failed: %s\n", strerror(errno));
