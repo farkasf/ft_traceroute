@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:21:54 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:15:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:26:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,15 @@ void	troute_routine(t_troute *troute)
 		{
 			troute->network.target_addr.sin_port = htons(troute->args.probe_port + ttl + i - 1);
 			send_udp_probe(troute);
-			receive_reply(troute);
+			handle_reply(troute);
 			i++;
 		}
 		dprintf(STDOUT_FILENO, "\n");
+		if (troute->network.target_addr.sin_addr.s_addr == troute->network.previous_addr.sin_addr.s_addr)
+		{
+			free_struct(troute);
+			exit(EXIT_SUCCESS);
+		}
 		ttl++;
 	}
 }

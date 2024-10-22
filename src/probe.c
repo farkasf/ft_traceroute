@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:21:05 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:24:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	analyze_reply(t_probe *probe)
 	return (-1);
 }
 
-void	receive_reply(t_troute *troute)
+void	handle_reply(t_troute *troute)
 {
 	t_probe	probe;
 

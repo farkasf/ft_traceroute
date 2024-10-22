@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 03:00:44 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 05:24:59 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	set_packet_lifetime(int socket_fd, unsigned int ttl, t_troute *troute);
 void	troute_routine(t_troute *troute);
 
 void	send_udp_probe(t_troute *troute);
-void	receive_reply(t_troute *troute);
+void	handle_reply(t_troute *troute);
 
 #endif
