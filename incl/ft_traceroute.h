@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 23:54:33 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 01:24:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_network
 	char				host_ip[INET_ADDRSTRLEN];
 	int					udp_socket_fd;
 	int					icmp_socket_fd;
+	bool				target_reached;
 }	t_network;
 
 typedef struct s_args
