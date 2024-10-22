@@ -6,11 +6,21 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:40:24 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 06:11:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	calculate_rtt(t_timer *timer)
+{
+	double	seconds;
+	double	useconds;
+
+	seconds = timer->rtt_finish.tv_sec - timer->rtt_start.tv_sec;
+	useconds = timer->rtt_finish.tv_usec - timer->rtt_start.tv_usec;
+	timer->rtt = seconds * 1000 + useconds / 1000;
+}
 
 void	print_trace_result(t_probe *probe, t_troute *troute)
 {
@@ -30,10 +40,11 @@ void	print_trace_result(t_probe *probe, t_troute *troute)
 			exit(EXIT_FAILURE);
 		}
 	}
+	calculate_rtt(&troute->timer);
 	if (troute->network.previous_addr.sin_addr.s_addr == probe->recv_addr.sin_addr.s_addr)
-		dprintf(STDOUT_FILENO, " ?.??? ms");
+		dprintf(STDOUT_FILENO, " %.3f ms", troute->timer.rtt);
 	else
-		dprintf(STDOUT_FILENO, "%s (%s)  ?.??? ms", domain, inet_ntoa(probe->recv_addr.sin_addr));
+		dprintf(STDOUT_FILENO, "%s (%s)  %.3f ms", domain, inet_ntoa(probe->recv_addr.sin_addr), troute->timer.rtt);
 }
 
 static int	analyze_reply(t_probe *probe)
@@ -72,6 +83,7 @@ void	handle_reply(t_troute *troute)
 		free_struct(troute);
 		exit(EXIT_FAILURE);
 	}
+	gettimeofday(&(troute->timer.rtt_finish), NULL);
 	if (analyze_reply(&probe) == -1)
 		return ;
 	print_trace_result(&probe, troute);
@@ -86,6 +98,7 @@ void	send_udp_probe(t_troute *troute)
 	ft_memset(&packet, 0, sizeof(packet));
 	sent_bytes = sendto(troute->network.udp_socket_fd, packet, sizeof(packet), 0, \
 		(struct sockaddr *)&troute->network.target_addr, sizeof(troute->network.target_addr));
+	gettimeofday(&(troute->timer.rtt_start), NULL);
 	if (sent_bytes == -1)
 	{
 		dprintf(STDERR_FILENO, "ft_traceroute: sendto failed: %s\n", strerror(errno));

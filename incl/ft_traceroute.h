@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:24:59 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 06:06:55 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <sys/time.h>
 
 # include <arpa/inet.h>
 # include <sys/types.h>
@@ -40,6 +41,13 @@
 # define IP_HDRLEN 20
 # define UDP_HDRLEN 8
 # define UDP_DATALEN 60
+
+typedef struct s_timer
+{
+	struct timeval	rtt_start;
+	struct timeval	rtt_finish;
+	double			rtt;
+}	t_timer;
 
 typedef struct s_probe
 {
@@ -74,6 +82,7 @@ typedef struct s_troute
 {
 	t_args		args;
 	t_network	network;
+	t_timer		timer;
 }	t_troute;
 
 void	parse_args(t_args *args, int ac, char **av);

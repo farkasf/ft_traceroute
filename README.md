@@ -12,14 +12,13 @@ This project will make you recode the traceroute command.
    * send packets starting from the base port (default 33434) up to `base + (max hops - 1)`
    * start with a TTL of 1 and increase until the max hops or the destination is reached
    * send the desired number of probes (default 3) per TTL value
-5. [❌] receive and process ICMP response packets
+5. [✅] receive and process ICMP response packets
    * implement a timeout mechanism (default 1000 ms)
    * handle `ICMP Time Exceeded` and `ICMP Port Unreachable` messages
-6. [❌] convert router IP addresses into hostnames
+6. [✅] convert router IP addresses into hostnames
    * if possible, perform a reverse DNS lookup using `getnameinfo()`
-7. [❌] check if the final destination is reached
+7. [✅] check if the final destination is reached
    * yes? close sockets and exit
    * no? increment the TTL and send the next round of probes
 8. [❌] track time and wait for socket responses
    * measure the round-trip time (RTT) for each probe
-
