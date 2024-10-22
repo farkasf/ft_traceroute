@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/21 23:49:43 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 02:59:49 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	free_struct(t_troute *troute)
 		free(troute->args.target);
 		troute->args.target = NULL;
 	}
-	if (troute->network.socket_fd)
-		close(troute->network.socket_fd);
+	if (troute->network.udp_socket_fd)
+		close(troute->network.udp_socket_fd);
+	if (troute->network.icmp_socket_fd)
+		close(troute->network.icmp_socket_fd);
 }
 
 void	print_args_error(const char *format, t_args *args, ...)

@@ -15,11 +15,11 @@ This project will make you recode the traceroute command.
 5. [❌] receive and process ICMP response packets
    * implement a timeout mechanism (default 1000 ms)
    * handle `ICMP Time Exceeded` and `ICMP Port Unreachable` messages
-6. [❌] check if the final destination is reached
+6. [❌] convert router IP addresses into hostnames
+   * if possible, perform a reverse DNS lookup using `getnameinfo()`
+7. [❌] check if the final destination is reached
    * yes? close sockets and exit
    * no? increment the TTL and send the next round of probes
-7. [❌] track time and wait for socket responses
+8. [❌] track time and wait for socket responses
    * measure the round-trip time (RTT) for each probe
-8. [❌] convert router IP addresses into hostnames
-   * if possible, perform a reverse DNS lookup using `getnameinfo()`
 
