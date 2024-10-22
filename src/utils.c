@@ -6,11 +6,21 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 02:59:49 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 06:26:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
+
+void	calculate_rtt(t_timer *timer)
+{
+	double	seconds;
+	double	useconds;
+
+	seconds = timer->rtt_finish.tv_sec - timer->rtt_start.tv_sec;
+	useconds = timer->rtt_finish.tv_usec - timer->rtt_start.tv_usec;
+	timer->rtt = seconds * 1000 + useconds / 1000;
+}
 
 void	check_uid(void)
 {

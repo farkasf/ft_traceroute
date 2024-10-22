@@ -6,45 +6,51 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 06:11:57 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 17:39:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_traceroute.h"
 
-void	calculate_rtt(t_timer *timer)
-{
-	double	seconds;
-	double	useconds;
-
-	seconds = timer->rtt_finish.tv_sec - timer->rtt_start.tv_sec;
-	useconds = timer->rtt_finish.tv_usec - timer->rtt_start.tv_usec;
-	timer->rtt = seconds * 1000 + useconds / 1000;
-}
-
-void	print_trace_result(t_probe *probe, t_troute *troute)
+char	*resolve_probe_output(t_probe *probe, t_troute *troute, char mode)
 {
 	struct hostent	*hop;
-	char			*domain;
+	char			*output;
 
-	hop = gethostbyaddr(&(probe->recv_addr.sin_addr), sizeof(struct in_addr), AF_INET);
-	if (hop)
-		domain = hop->h_name;
-	else
+	output = NULL;
+	if (mode == 'D' && troute->args.resolve)
 	{
-		domain = inet_ntoa(probe->recv_addr.sin_addr);
-		if (ft_strlen(domain) == 0)
+		hop = gethostbyaddr(&(probe->recv_addr.sin_addr), sizeof(struct in_addr), AF_INET);
+		if (hop)
+			output = hop->h_name;
+	}
+	if (mode == 'I' || output == NULL)
+	{
+		output = inet_ntoa(probe->recv_addr.sin_addr);
+		if (ft_strlen(output) == 0)
 		{
 			dprintf(STDERR_FILENO, "ft_traceroute: failed to convert IP address to string format\n");
 			free_struct(troute);
 			exit(EXIT_FAILURE);
 		}
 	}
+	return (output);
+}
+
+void	print_trace_result(t_probe *probe, t_troute *troute)
+{
+	char	*domain;
+	char	*ip_str;
+	
+	domain = NULL;
+	ip_str = NULL;
+	domain = resolve_probe_output(probe, troute, 'D');
+	ip_str = resolve_probe_output(probe, troute, 'I');
 	calculate_rtt(&troute->timer);
 	if (troute->network.previous_addr.sin_addr.s_addr == probe->recv_addr.sin_addr.s_addr)
 		dprintf(STDOUT_FILENO, " %.3f ms", troute->timer.rtt);
 	else
-		dprintf(STDOUT_FILENO, "%s (%s)  %.3f ms", domain, inet_ntoa(probe->recv_addr.sin_addr), troute->timer.rtt);
+		dprintf(STDOUT_FILENO, "%s (%s)  %.3f ms", domain, ip_str, troute->timer.rtt);
 }
 
 static int	analyze_reply(t_probe *probe)

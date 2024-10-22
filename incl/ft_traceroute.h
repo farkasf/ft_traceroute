@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:52 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 06:06:55 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/22 06:25:46 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_troute
 
 void	parse_args(t_args *args, int ac, char **av);
 
+void	calculate_rtt(t_timer *timer);
 void	check_uid(void);
 void	free_struct(t_troute *troute);
 void	print_usage(void);

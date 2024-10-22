@@ -20,5 +20,6 @@ This project will make you recode the traceroute command.
 7. [✅] check if the final destination is reached
    * yes? close sockets and exit
    * no? increment the TTL and send the next round of probes
-8. [❌] track time and wait for socket responses
+8. [✅] track time and wait for socket responses
    * measure the round-trip time (RTT) for each probe
+9. [✅] implement solutions for each of the supported options
