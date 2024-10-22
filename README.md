@@ -1,7 +1,40 @@
 # ft_traceroute
-This project will make you recode the traceroute command.
+`ft_traceroute` is a C-based implementation of the classic `traceroute` command. The project is designed to trace the path packets take across an IP network by sending probe packets and processing ICMP responses.
 
-## Project Plan
+## features
+- command-line argument parsing with option flags
+   * `-q`: set number of probes per TTL (default: 3)
+   * `-m`: set maximum hops (default: 30)
+   * `-f`: set first hop TTL (default: 1)
+   * `-p`: set the destination port (default: 33434)
+   * `-n`: disable reverse DNS lookup for addresses
+   * `--help`: display usage information
+- IPv4 address resolution using `getaddrinfo()`
+- UDP packet generation and ICMP response handling
+- time-to-live (TTL) management for probe routing
+- round-trip time (RTT) calculation for each probe
+- optional reverse DNS lookup for IP addresses
+
+## usage
+Clone and compile the project:
+``` bash
+git clone https://github.com/farkasf/ft_traceroute
+cd ft_traceroute
+make
+```
+
+Run ft_traceroute:
+``` bash
+./ft_traceroute [options] <target_ip_or_domain>
+```
+
+Example:
+``` bash
+./ft_traceroute google.com -q 3 -m 15 -f 5 -n
+```
+   * runs 3 probes per hop, starting from TTL 5 and going up to 15, without resolving IP addresses to domain names.
+
+## project plan
 
 1. [✅] create a command-line argument parser to validate user input
    * target IP, number of probes (`-q`), max hops (`-m`), first hop (`-f`), default port (`-p`), no IP domain resolution (`-n`) and help (`--help`)
