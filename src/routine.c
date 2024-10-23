@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:21:54 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/23 01:29:20 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 04:56:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	troute_routine(t_troute *troute)
 		
 		while (i < troute->args.n_queries)
 		{
-			troute->network.target_addr.sin_port = htons(troute->args.probe_port + troute->args.first_ttl + i - 1);
+			troute->network.target_addr.sin_port = htons(troute->args.probe_port + troute->args.first_ttl \
+				+ i - 1);
 			send_udp_probe(troute);
 			handle_reply(troute);
 			if (troute->network.target_addr.sin_addr.s_addr == troute->network.previous_addr.sin_addr.s_addr)

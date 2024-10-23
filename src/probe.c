@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/23 02:30:22 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 04:54:58 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	analyze_reply(t_probe *probe)
 	
 	ip_hdr = (struct ip *)probe->recv_packet;
 	icmp_hdr = (struct icmp *)(probe->recv_packet + (ip_hdr->ip_hl << 2));
-	if (icmp_hdr->icmp_type == 0 || icmp_hdr->icmp_type == 3 || icmp_hdr->icmp_type == 11 || icmp_hdr->icmp_type == 5)
+	if (icmp_hdr->icmp_type == 0 || icmp_hdr->icmp_type == 3 || icmp_hdr->icmp_type == 11 \
+		|| icmp_hdr->icmp_type == 5)
 		return (0);
 	dprintf(STDERR_FILENO, " * (no response)");
 	return (-1);
@@ -79,9 +80,10 @@ void	handle_reply(t_troute *troute)
 	probe.timeout.tv_sec = 0;
 	probe.timeout.tv_usec = 500000;
 
-	setsockopt(troute->network.icmp_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &probe.timeout, sizeof(probe.timeout));
-	probe.recv_bytes = recvfrom(troute->network.icmp_socket_fd, probe.recv_packet, sizeof(probe.recv_packet), 0, \
-		(struct sockaddr *)&probe.recv_addr, &probe.addr_size);
+	setsockopt(troute->network.icmp_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &probe.timeout, \
+		sizeof(probe.timeout));
+	probe.recv_bytes = recvfrom(troute->network.icmp_socket_fd, probe.recv_packet, \
+		sizeof(probe.recv_packet), 0, (struct sockaddr *)&probe.recv_addr, &probe.addr_size);
 
 	if (probe.recv_bytes == -1)
 	{
