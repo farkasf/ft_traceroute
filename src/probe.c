@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/23 00:03:20 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/23 02:30:22 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,12 @@ static void	print_trace_result(t_probe *probe, t_troute *troute)
 	if (troute->network.previous_addr.sin_addr.s_addr == probe->recv_addr.sin_addr.s_addr)
 		dprintf(STDOUT_FILENO, " %.3f ms", troute->timer.rtt);
 	else
-		dprintf(STDOUT_FILENO, "%s (%s)  %.3f ms", domain, ip_str, troute->timer.rtt);
+	{
+		if (!troute->args.resolve)
+			dprintf(STDOUT_FILENO, "%s  %.3f ms", ip_str, troute->timer.rtt);
+		else
+			dprintf(STDOUT_FILENO, "%s (%s)  %.3f ms", domain, ip_str, troute->timer.rtt);
+	}
 }
 
 static int	analyze_reply(t_probe *probe)
