@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:04:35 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/23 04:58:09 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/24 18:53:08 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_args_error(const char *format, t_args *args, ...)
 void	print_usage(void)
 {
 	dprintf(STDOUT_FILENO,
-		"\nUsage:\n"
+		"Usage:\n"
 		"  ./ft_traceroute [ -n ] [ -f first_ttl ] [ -m max_ttl ] [ -p port ] [ -q nqueries ] host\n"
 		"\nOptions:\n"
 		"  -f first_ttl                Start from the first_ttl hop (instead from 1).\n"
@@ -72,6 +72,6 @@ void	print_usage(void)
 		"  -q nqueries                 Set the number of probes per each hop. Default is 3.\n"
 		"  --help                      Read this help and exit.\n"
 		"\nArguments:\n"
-		"+     host          The host to traceroute to.\n\n");
+		"+     host      The host to traceroute to.\n");
 	exit(EXIT_SUCCESS);
 }

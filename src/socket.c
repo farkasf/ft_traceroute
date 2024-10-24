@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 21:56:36 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/22 05:07:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/24 18:50:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	fetch_ip_addr(t_troute *troute)
 
 	if (resolve_host(troute->args.target, &res) == -1)
 	{
-		dprintf(STDERR_FILENO, "%s: Name or service not known\n", troute->args.target);
+		dprintf(STDERR_FILENO, "%s: Temporary failure in name resolution\n", troute->args.target);
 		print_args_error("Cannot handle \"host\" cmdline arg `%s' on position 1 (argc %d)\n", \
 			&troute->args, troute->args.target, troute->args.target_pos);
 	}
