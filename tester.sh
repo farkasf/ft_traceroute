@@ -53,14 +53,14 @@ run_test "Traceroute valid IP #2" "$TROUTE_CMD 1.1.1.1" "one.one.one.one"
 
 run_test "Traceroute reserved IP" "$TROUTE_CMD 192.0.2.1 -m 11" "11  * * *"
 run_test "Traceroute private IP" "$TROUTE_CMD 192.168.0.1 -m 13" "13  * * *"
-run_test "Traceroute invalid IP #1" "$TROUTE_CMD 999.999.999.999" "Name or service not known"
-run_test "Traceroute invalid IP #2" "$TROUTE_CMD 256.0.0.1" "Name or service not known"
+run_test "Traceroute invalid IP #1" "$TROUTE_CMD 999.999.999.999" "Temporary failure in name resolution"
+run_test "Traceroute invalid IP #2" "$TROUTE_CMD 256.0.0.1" "Temporary failure in name resolution"
 
 run_test "Traceroute valid hostname #1" "$TROUTE_CMD google.com" "in-f14.1e100.net"
 run_test "Traceroute valid hostname #2" "$TROUTE_CMD 42prague.com" "ludvik.izon.cz"
 
-run_test "Traceroute invalid hostname #1" "$TROUTE_CMD invalid_hostname" "Name or service not known"
-run_test "Traceroute invalid hostname #2" "$TROUTE_CMD hashtag#.com" "Name or service not known"
+run_test "Traceroute invalid hostname #1" "$TROUTE_CMD invalid_hostname" "Temporary failure in name resolution"
+run_test "Traceroute invalid hostname #2" "$TROUTE_CMD hashtag#.com" "Temporary failure in name resolution"
 
 run_test "Traceroute valid, non-traceable hostname #1" "$TROUTE_CMD facebook.com -m 20" "20  * * *"
 run_test "Traceroute valid, non-traceable hostname #2" "$TROUTE_CMD wikipedia.org -m 20" "20  * * *"
