@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:03:34 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/24 18:50:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/24 19:38:11 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	parse_args(t_args *args, int ac, char **av)
 					case 'f':
 						i += set_opt(&args->first_ttl, av[i], i, ac, av, args);
 						break ;
-				}	
+				}
 			}
 			else if (av[i][1] == 'n' && av[i][2] == '\0')
 				args->resolve = false;
@@ -118,7 +118,7 @@ void	parse_args(t_args *args, int ac, char **av)
 			if (!args->target)
 			{
 				args->target = ft_strdup(av[i]);
-				args->target_pos = i;	
+				args->target_pos = i;
 			}
 			else
 				print_args_error("Extra arg `%s' (argc %d)\n", args, av[i], ac - 1);

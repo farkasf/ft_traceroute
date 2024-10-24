@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:21:54 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/24 18:45:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/24 19:38:30 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	troute_routine(t_troute *troute)
 		ft_memset(&troute->network.previous_addr, 0, sizeof(troute->network.previous_addr));
 
 		dprintf(STDOUT_FILENO, "%2u  ", troute->args.first_ttl);
-		
+
 		while (i < troute->args.n_queries)
 		{
 			troute->network.target_addr.sin_port = htons(troute->args.probe_port + troute->args.first_ttl \

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:36:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/23 04:54:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/24 19:37:35 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_trace_result(t_probe *probe, t_troute *troute)
 {
 	char	*domain;
 	char	*ip_str;
-	
+
 	domain = NULL;
 	ip_str = NULL;
 	domain = resolve_probe_output(probe, troute, 'D');
@@ -62,7 +62,7 @@ static int	analyze_reply(t_probe *probe)
 {
 	struct ip		*ip_hdr;
 	struct icmp		*icmp_hdr;
-	
+
 	ip_hdr = (struct ip *)probe->recv_packet;
 	icmp_hdr = (struct icmp *)(probe->recv_packet + (ip_hdr->ip_hl << 2));
 	if (icmp_hdr->icmp_type == 0 || icmp_hdr->icmp_type == 3 || icmp_hdr->icmp_type == 11 \
