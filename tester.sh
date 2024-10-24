@@ -68,7 +68,7 @@ run_test "Traceroute valid, non-traceable hostname #2" "$TROUTE_CMD wikipedia.or
 run_test "Traceroute valid IP with first_ttl hop set to 10" "$TROUTE_CMD 8.8.8.8 -f 10" "dns.google"
 run_test "Traceroute valid hostname with first_ttl hop set to 5" "$TROUTE_CMD 42prague.com -f 5" "ludvik.izon.cz"
 
-run_test "Traceroute valid IP with max number of hops set to 10" "$TROUTE_CMD 8.8.8.8 -m 10" "10  "
+run_test "Traceroute valid IP with max number of hops set to 3" "$TROUTE_CMD 8.8.8.8 -m 3" "3  "
 run_test "Traceroute valid hostname with max number of hops set to 5" "$TROUTE_CMD 42prague.com -m 10" "5  "
 
 run_test "Traceroute valid IP with number of probes set to 5" "$TROUTE_CMD 8.8.8.8 -q 5" "dns.google"
